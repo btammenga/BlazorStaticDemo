@@ -1,0 +1,36 @@
+﻿.nav, .nav-tabs {
+    background-color: #9080FF;
+    color: #FFF;
+    /*background-color: white;*/
+    border-bottom: 2px solid red;
+}
+
+.nav-tabs .nav-item .nav-link.active {
+    color: #0080FF;
+}
+
+/*.nav.nav-tabs.active {
+    background-color: red;
+    border-bottom: 2px solid green;
+    font-size:large;
+}*/
+
+.nav-tabs-body {
+    background-color: #AFF;
+    border: 5px solid #dee2e6;
+    border-top: transparent;
+    min-height: 400px;
+    height: auto;
+    padding: 15px;
+}
+
+/*.tabcontrol {
+    background-color: cadetblue;
+}*/
+
+.tab-content .tab-pane {
+    background-color: #FFF;
+    color: #0080FF;
+    min-height: 200px;
+    height: auto;
+}

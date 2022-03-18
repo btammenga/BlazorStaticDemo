@@ -1,0 +1,9 @@
+﻿<CascadingValue Value="this">
+    <ul id="tabs" class="nav nav-tabs flex-column flex-sm-row">
+        @ChildContent
+    </ul>
+</CascadingValue>
+
+<div class="nav-tabs-body">
+    @ActivePage?.ChildContent
+</div>

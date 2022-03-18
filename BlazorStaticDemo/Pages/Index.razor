@@ -6,4 +6,34 @@
 
 Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+
+
+<TabControl>
+
+    <TabPage Title="Allereerste Tab 1">
+        <h4> Inhoud van Tab 1</h4>
+        <SurveyPrompt />
+    </TabPage>
+
+    <TabPage Title="Tab 2">
+        <h4> Inhoud van Tab 2</h4>
+        <Component1 />
+    </TabPage>
+
+    @for (int i = 3; i <= 5; i++)
+    {
+        int iLocal = i;
+        <TabPage Title='@($"Tab {i}")'>
+            <h4> Inhoud van Tab @iLocal</h4>
+            <Component1 />
+        </TabPage>
+    }
+
+    @if (DateTime.Today.Minute %2  != 0)
+    {
+        <TabPage Title="Uneven Minute!">
+            <h4>Het is oneven minuut</h4>
+        </TabPage>
+    }
+
+</TabControl>
