@@ -1,3 +1,46 @@
+/* /Components/TabControl.razor.rz.scp.css */
+.nav[b-mqwaxrpexo], .nav-tabs[b-mqwaxrpexo] {
+    background-color: #9080FF;
+    color: #FFF;
+    /*background-color: white;*/
+    border-bottom: 2px solid red;
+}
+
+.nav-tabs .nav-item .nav-link.active[b-mqwaxrpexo] {
+    color: #0080FF;
+}
+
+/*.nav.nav-tabs.active {
+    background-color: red;
+    border-bottom: 2px solid green;
+    font-size:large;
+}*/
+
+.nav-tabs-body[b-mqwaxrpexo] {
+    background-color: #AFF;
+    border: 5px solid #dee2e6;
+    border-top: transparent;
+    min-height: 400px;
+    height: auto;
+    padding: 15px;
+}
+
+/*.tabcontrol {
+    background-color: cadetblue;
+}*/
+
+.tab-content .tab-pane[b-mqwaxrpexo] {
+    background-color: #FFF;
+    color: #0080FF;
+    min-height: 200px;
+    height: auto;
+}
+/* /Components/TabPage.razor.rz.scp.css */
+.nav-tabs .nav-item .nav-link.active[b-by2jua1dxb] {
+    color: #ff0000;
+    background-color: #0094ff;
+    border: 2px solid #ff6a00;
+}
 /* /Shared/MainLayout.razor.rz.scp.css */
 .page[b-7lxg0ifj0b] {
     position: relative;
