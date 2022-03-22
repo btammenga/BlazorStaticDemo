@@ -1,0 +1,99 @@
+﻿@page "/cg"
+@using BlazorStaticDemo.Models
+@using System.Globalization
+
+<h3>ControlsGallery</h3>
+
+<p>
+    Name : @person.SalesPerson
+</p>
+<p>
+    Amount : @(person.Amount.ToString("C0",cultureInfo))
+</p>
+<p>
+    <input type="number" @bind-value="person.Amount" @bind-value:event="oninput" />
+</p>
+<p>
+    <label>
+        <input type="checkbox" @bind-value="person.IsActive" />
+        &nbsp;is Active
+    </label>
+    <br />
+    @person.IsActive
+</p>
+
+<p>
+    <label>
+        <input type="radio" value="1" name="radiogroup" checked="@(selectedOption == 123)"
+               @onclick="@(() => selectedOption = 123)" />Optie 1
+    </label>
+    <label>
+        <input type="radio" value="2" name="radiogroup" checked="@(selectedOption == 21)"
+               @onclick="@(() => selectedOption = 21)" />
+        Optie 2
+    </label>
+    <br />
+    Selected option : @selectedOption
+</p>
+
+<p>
+    <select @bind="selectedLocationId">
+        <option value="0"></option>
+        @foreach (var location in person.Locations)
+       {
+           <option value="@location.Id">@location.City (@location.Country)</option>
+       }
+    </select>
+    <br/>
+    SelectedId Id:&nbsp;@selectedLocationId
+</p>
+
+<p>
+    <ul>
+        @foreach (var location in person.Locations)
+       {
+           <li>@location.City, @location.ProvState, @location.Country</li>
+       }
+    </ul>
+</p>
+<p>
+    <table class="table table-striped">
+        @foreach (var location in person.Locations)
+       {
+           <tr>
+           <td>@location.Id</td>
+           <td>@location.City</td>
+           <td><input type="text" class="form-control"
+               @bind-value="@location.City" 
+               @bind-value:event= "oninput"/></td>
+           <td>@location.ProvState</td>
+           <td>@location.Country</td>
+           </tr>
+       }
+    </table>
+</p>
+
+
+
+@code {
+
+    IndexViewModel person = null!;
+    CultureInfo cultureInfo = CultureInfo.GetCultureInfo("nl-NL");
+    int selectedOption = 0;
+    int selectedLocationId = 0;
+
+
+    protected override void OnInitialized()
+    {
+        person = new IndexViewModel
+            {
+                SalesPerson = "Alex",
+                Amount = 15000,
+                Locations = new List<Location> {
+                        new Location {Id =1, City = "Breda", ProvState = "Noord-Brabant", Country = "Nederland"},
+                        new Location {Id =2, City = "Utrecht", ProvState = "Utrecht", Country = "Nederland"},
+                        new Location {Id =3, City = "Amsterdam", ProvState = "Noord-Holland", Country = "Nederland"},
+                        new Location {Id =5, City = "Rotterdam", ProvState = "Zuid-Holland", Country = "Nederland"} }
+            };
+    }
+}
