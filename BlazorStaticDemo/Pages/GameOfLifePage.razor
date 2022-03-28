@@ -1,0 +1,115 @@
+﻿@page "/gol"
+@using LifeLibraryNetStandard2
+
+<div class="col-3">
+</div>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <h5 class="col-2">Game of Life</h5>
+        <div class="col-6">
+            <form class="form-inline">
+                <div class="input-group">
+                    <label class="control-label" for="xsize">X-size grid</label>
+                    <div class="col-3">
+                        <input class="form-control" type="number" @bind-value="@xsize" />
+                    </div>
+
+                    <label class="control-label" for="ysize">Y-size grid</label>
+                    <div class="col-3">
+                        <input class="form-control" type="number" @bind-value="@ysize"  />
+                    </div>
+                    <label class="control-label" for="ticks">ticks</label>
+                    <div class="col-2">
+                        <input class="form-control" type="number" @bind-value="@ticks"  />
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-2">
+            <button class="btn btn-outline-primary" @onclick="InitGol">Start</button>
+        </div>
+    </div>
+</div>
+@if (golIsInitialized)
+{
+    <div class="container-fluid">
+        <CascadingValue Name="xSize" Value="@xsize" IsFixed="true">
+            <CascadingValue Name="ySize" Value="@ysize" IsFixed="true">
+                <CascadingValue Name="cells" Value="@_cells" IsFixed="true">
+                    <GolGridComponent Cells="@_cells"></GolGridComponent>
+                </CascadingValue>
+            </CascadingValue>
+        </CascadingValue>
+    </div>
+}
+
+@code {
+    int xsize = 20;
+    int ysize = 20;
+    int ticks = 100;
+    GameOfLife gol;
+    Seed _seed;
+    private List<Cell> _cells;
+    private bool golIsInitialized = false;
+
+    private void InitGol()
+    {
+        golIsInitialized = false;
+        gol = new(xsize, ysize, ticks);
+        if (!golIsInitialized)
+        {
+            gol.Heartbeat += GameOfLifeHeartbeatEventHandler;
+        }
+            
+
+        _cells = gol.Cells;
+        _seed = new(_cells);
+
+        SeedGameOfLifeGridCells();
+        golIsInitialized = true;
+
+        gol.Live(500);
+    }
+
+    private void SeedGameOfLifeGridCells()
+    {
+        _seed.SeedLightWeightSpaceship(2, 1);
+
+        //_seed.SeedCell(24, 13);
+        //_seed.SeedCell(25, 13);
+        //_seed.SeedCell(26, 13);
+        //_seed.SeedCell(25, 14);
+        //_seed.SeedCell(26, 14);
+        //_seed.SeedCell(27, 14);
+        //_seed.SeedCell(26, 15);
+        //_seed.SeedCell(27, 15);
+        //_seed.SeedCell(28, 15);
+
+        //_seed.SeedGlider(1, 8);
+
+        //_seed.SeedHorBlinker(6, 21);
+        //_seed.SeedVerBlinker(2, 20);
+        //_seed.SeedToad(2, 25);
+        //_seed.SeedBlock(2, 30);
+
+        //_seed.SeedHorBlinker(21, 20);
+        //_seed.SeedHorBlinker(24, 20);
+        //_seed.SeedVerBlinker(21, 21);
+        //_seed.SeedVerBlinker(21, 24);
+        //_seed.SeedHorBlinker(21, 27);
+        //_seed.SeedHorBlinker(24, 27);
+        //_seed.SeedVerBlinker(27, 21);
+        //_seed.SeedVerBlinker(27, 24);
+        //_seed.SeedHorBlinker(23, 24);
+    }
+
+    private void GameOfLifeHeartbeatEventHandler(object sender, HeartbeatEventArgs args)
+    {
+        //ShowGrid(args.HeartBeatTick, args.AverageTickRate);
+         _cells = gol.Cells;
+    }
+
+
+}

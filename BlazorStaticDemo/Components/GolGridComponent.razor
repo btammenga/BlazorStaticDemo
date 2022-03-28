@@ -1,0 +1,29 @@
+﻿@using LifeLibraryNetStandard2
+
+<div>
+    @for (int y = 0; y < yMax; y++)
+    {
+        var cellLine = Cells.Where(c => c.YPosition == y + 1).OrderBy(o => o.XPosition);
+        <div style="height:21px;">
+            @foreach (var cell in cellLine)
+            {
+                <GolCell Alive="@cell.IsAlive"></GolCell>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [CascadingParameter(Name = "xSize")]
+    int xMax { get; set; }
+    [CascadingParameter(Name = "ySize")]
+    int yMax { get; set; }
+    //[CascadingParameter(Name = "cells")]
+    [Parameter]
+    public List<Cell> Cells { get; set; }
+
+    protected override Task OnParametersSetAsync()
+    {        
+        StateHasChanged();
+    }
+}
