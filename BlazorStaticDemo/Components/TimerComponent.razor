@@ -1,0 +1,27 @@
+﻿@inject Service.BlazorTimer Timer
+
+<h3>Blazor Timer</h3>
+
+
+
+<button @onclick="StartTimer">Start Timer 5 seconds</button>
+<br/>
+<h1>@message</h1>
+
+@code {
+    private string message = string.Empty;
+    private void StartTimer()
+    {
+        Timer.SetTimer(5000);
+        Timer.OnElapsed += TimerElapsedHandler;        
+        message = "Timer Started.";
+        Console.WriteLine("Timer Started.");
+    }
+
+    private void TimerElapsedHandler()
+    {
+        message = "Timer Elapsed.";
+        Console.WriteLine("Timer Elapsed.");
+        StateHasChanged();
+    }
+}
