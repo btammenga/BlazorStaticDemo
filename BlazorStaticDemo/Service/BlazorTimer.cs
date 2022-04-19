@@ -22,4 +22,5 @@ public class BlazorTimer
         OnElapsed?.Invoke();
         _timer.Dispose();
     }
+
 }

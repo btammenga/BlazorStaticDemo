@@ -1,19 +1,24 @@
-﻿@inject Service.BlazorTimer Timer
+﻿@inject Service.BlazorTimer BlazorTimer
 
 <h3>Blazor Timer</h3>
 
 
 
 <button @onclick="StartTimer">Start Timer 5 seconds</button>
-<br/>
+<br />
 <h1>@message</h1>
+<br />
+<br />
+<p>@displayText @TimeLeft </p>
+
+
 
 @code {
     private string message = string.Empty;
     private void StartTimer()
     {
-        Timer.SetTimer(5000);
-        Timer.OnElapsed += TimerElapsedHandler;        
+        BlazorTimer.SetTimer(5000);
+        BlazorTimer.OnElapsed += TimerElapsedHandler;
         message = "Timer Started.";
         Console.WriteLine("Timer Started.");
     }
@@ -23,5 +28,43 @@
         message = "Timer Elapsed.";
         Console.WriteLine("Timer Elapsed.");
         StateHasChanged();
+    }
+
+    //--------------
+    protected override async Task OnInitializedAsync()
+    {
+        await Start();
+    }
+
+    TimeSpan TimeLeft = new TimeSpan(0, 0, 15);
+    string displayText = "";
+    bool show = false;
+
+    async Task Start()
+    {
+        Task.Delay(1000);
+        displayText = "Start Time";
+        show = true;
+        await Timer();
+    }
+
+    async Task Timer()
+    {
+        while (TimeLeft > new TimeSpan())
+        {
+            await Task.Delay(1000);
+            TimeLeft = TimeLeft.Subtract(new TimeSpan(0, 0, 1));
+            StateHasChanged();
+        }
+
+        await AfterTime();
+        StateHasChanged();
+    }
+
+    Task AfterTime()
+    {
+        displayText = "Time Expire";
+        TimeLeft = new TimeSpan(0, 0, 15);
+        return Task.CompletedTask;
     }
 }

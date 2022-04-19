@@ -1,0 +1,55 @@
+﻿@page "/bc1"
+@inject IJSRuntime JsRuntime
+
+<h3>QR Code scanner</h3>
+
+<div class="row">
+    <div class="col">
+        <div style="width:500px" id='reader' >
+        </div>
+    </div>
+    <div class="col" style="padding:30px">
+        <h4>Scan result</h4>
+        <div id="result">Result Here</div>
+        <div>@foreach (var item in ScanResults)
+            {
+                @item <br/>
+            }
+            </div>
+    </div>
+</div>
+
+
+
+@code {
+    IJSObjectReference _jSObjectReference{ get; set; }    
+
+    List<string> ScanResults { get; set; }
+    static Bc1 _instance;
+    static Bc1 GetInstance()
+    {
+        if (_instance == null)
+            _instance = new Bc1();
+        return _instance;
+    }
+    public Bc1()
+    {
+        ScanResults = new();
+        _instance = this;
+    }
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _jSObjectReference = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/qrcode.js");
+        }
+    }
+
+    [JSInvokable]
+    public static async Task<bool> AddScanResult(string result)
+    {
+        _instance.ScanResults.Add(result);
+        _instance.StateHasChanged();
+        return await Task.FromResult(true);
+    }
+}
