@@ -1,4 +1,6 @@
-﻿<div class="container-fluid">
+﻿@inject IJSRuntime JsRuntime
+
+<div class="container-fluid">
     <div class="row">
         <div class="col-sm p-0 m-0">
             <BlazorBarcodeScanner.ZXing.JS.BarcodeReader @ref="_reader"
@@ -46,7 +48,3 @@
         </div>
     </div>
 </div>
-
-@code {
-
-}
