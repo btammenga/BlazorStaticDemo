@@ -1,0 +1,52 @@
+﻿<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm p-0 m-0">
+            <BlazorBarcodeScanner.ZXing.JS.BarcodeReader @ref="_reader"
+                                                         StartCameraAutomatically="true"
+                                                         Title="QR / Barcode scanner"
+                                                         ShowToggleTorch="false"
+                                                         ShowStart="false"
+                                                         ShowReset="false"
+                                                         ShowResult="false"
+                                                         ShowVideoDeviceList="false"
+                                                         VideoWidth="320"
+                                                         VideoHeight="320"
+                                                         StreamWidth="@_streamWidth"
+                                                         StreamHeight="@_streamHeight"
+                                                         OnBarcodeReceived="LocalReceivedBarcodeText" />
+        </div>
+        <div class="m-0 p-0">
+            <div>
+                <button @onclick="() => _reader.StartDecoding()" class="btn btn-outline-primary">Start</button>
+                <button @onclick="() => _reader.StopDecoding()" class="btn btn-outline-danger">Stop</button>
+                <button @onclick="OnVideoSourceNext" class="btn btn-outline-dark">Next Camera</button>
+            </div>
+        </div>
+
+        <div class="col-sm m-0 p-0">
+
+            <div class="m-0 p-0">
+                <div><b>Scanresults</b></div>
+                <div class="alert alert-success" role="alert">                    
+                    @if (_scanResults.Count == 0)
+                    {
+                        @("Results will be here");
+                    }
+                    else
+                    {
+                        <ul>
+                            @foreach (var item in _scanResults)
+                            {
+                                <li>@item.Id @item.ScanTime.ToShortDateString() @item.ScanTime.ToLongTimeString() : @item.ScanResult @item.Coordinates</li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+}
