@@ -4,6 +4,7 @@
 <PageTitle>Weather forecast</PageTitle>
 
 <h1>Weather forecast</h1>
+<div id="SearchPoint">Locatie hier?</div>
 
 <p>This component demonstrates fetching data from the server.</p>
 
@@ -38,7 +39,7 @@ else
 
 @code {
     private WeatherForecast[]? forecasts;
-
+  
     protected override async Task OnInitializedAsync()
     {
         forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");

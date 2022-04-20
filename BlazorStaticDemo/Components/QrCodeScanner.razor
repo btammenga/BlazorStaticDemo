@@ -1,0 +1,70 @@
+﻿@using BlazorStaticDemo.Models
+@inject IJSRuntime JsRuntime
+
+<h3>QrCodeScanner</h3>
+<div class="col-12">
+    <div class="col-xs-8" id="reader"></div>
+    <div class="col-xs-4">
+        Scan Results:
+        <div >
+            <ul>
+            @foreach (var item in ScanResults)
+            {
+                <li>@item.ScanTime.ToShortDateString() @item.ScanTime.ToShortTimeString() : @item.ScanResult @item.Coordinates</li>
+            }
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    IJSObjectReference _jSObjectReference { get; set; }
+    List<ScanItem> ScanResults { get; set; }
+
+    static QrCodeScanner _instance;
+    static QrCodeScanner GetInstance()
+    {
+        if (_instance == null)
+        {
+            _instance = new();
+        }
+        return _instance;
+    }
+
+    public QrCodeScanner()
+    {
+        ScanResults = new();
+        _instance = this;
+    }
+
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _jSObjectReference = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/qrcode.js");
+            //_jSObjectReference = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/locationcoords.js");
+        }
+    }
+
+    private async Task InsertScanItem(string scanResult)
+    {
+        //var coord = await JsRuntime.InvokeAsync<Coordinates>("getLocation");
+        var scanItem = new ScanItem()
+            {
+                ScanResult = scanResult,
+                ScanTime = DateTime.Now,
+                //Coordinates = $"{coord.Latitude} , {coord.Longitude}"
+            };
+        ScanResults.Add(scanItem);
+        StateHasChanged();
+    }
+
+
+    [JSInvokable]
+    public static async Task<bool> QrAddScanResult(string result)
+    {
+        await _instance.InsertScanItem(result);
+        return await Task.FromResult(true);
+    }
+}

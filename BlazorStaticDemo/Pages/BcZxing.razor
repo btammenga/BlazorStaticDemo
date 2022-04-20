@@ -1,0 +1,43 @@
+﻿@page "/bc2"
+@*@inject IJSRuntime JsRuntime*@
+
+<h3>ZXing Barcode scanner</h3>
+<button @onclick="initializeScanner">Initialize</button>
+<section class="container" id="demo-content">
+
+    <div>
+        <a class="button" id="startButton">Start</a>
+        <a class="button" id="resetButton">Reset</a>
+    </div>
+
+    <div>
+        <video id="video" width="300" height="300" style="border: 1px solid gray"></video>
+    </div>
+
+    <div id="sourceSelectPanel" style="display:none">
+        <label for="sourceSelect">Change video source:</label>
+        <select id="sourceSelect" style="max-width:400px">
+        </select>
+    </div>
+
+    <label>Result:</label>
+<pre><code id="result"></code></pre>
+</section>
+
+@code {
+    //IJSObjectReference _jSObjectReference { get; set; }
+
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            //_jSObjectReference = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/zxingscanner.js");
+              
+        }
+    }
+
+    async Task initializeScanner()
+    {
+        //await JsRuntime.InvokeVoidAsync("initScanner");      
+    }
+}
